@@ -1,3 +1,4 @@
 name: sssystem
-depend: standard-library
+depend: cubical
 include: src
+flags: --cubical
