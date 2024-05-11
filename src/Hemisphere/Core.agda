@@ -55,14 +55,13 @@ record Hemisphere (H : Set ℓ) : Set ℓ where
     +InvR : (x : H) → x + (- x) ≡ 0h
     +Comm : (x y : H) → x + y ≡ y + x
 
+    ◠Twice : (x : H) → (◠ x) + (◠ x) ≡ x
+    ◠+Hom : (x y : H) → ◠ (x + y) ≡ (◠ x) + (◠ y)
+
     □Id : □ 0h ≡ 0h
     □One : □ 1h ≡ 1h
     □+One : (x : H) → □ (x + 1h) ≡ (((□ x) + x) + x) + 1h
     □◠Swap : (x : H) → □ (◠ x) ≡ ◠ (◠ (□ x))
-
-    ◠Id : ◠ 0h ≡ 0h
-    ◠Twice : (x : H) → (◠ x) + (◠ x) ≡ x
-    ◠+Hom : (x y : H) → ◠ (x + y) ≡ (◠ x) + (◠ y)
 
   infixl 6 _+_
 

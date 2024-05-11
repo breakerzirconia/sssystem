@@ -14,7 +14,7 @@ private
 open Relation.Binary.PropositionalEquality.≡-Reasoning
 
 -----------------------------------------------------------------------
--- Regular properties of abelian groups
+-- Regular properties of an additive abelian group
 
 -Id : {{_ : Hemisphere H}} → - 0h ≡ 0h
 -Id =
@@ -95,7 +95,43 @@ open Relation.Binary.PropositionalEquality.≡-Reasoning
   ∎
 
 -----------------------------------------------------------------------
--- Properties of the Sssystem
+-- Properties of Sssystem
+
+◠Id : {{_ : Hemisphere H}} → ◠ 0h ≡ 0h
+◠Id =
+    ◠ 0h
+  ≡⟨ sym (+IdL _) ⟩
+    0h + ◠ 0h
+  ≡⟨ cong (_+ ◠ 0h) (sym (+InvL _)) ⟩
+    - (◠ 0h) + ◠ 0h + ◠ 0h
+  ≡⟨ +Assoc _ _ _ ⟩
+    - (◠ 0h) + (◠ 0h + ◠ 0h)
+  ≡⟨ cong (- (◠ 0h) +_) (sym (◠+Hom _ _)) ⟩
+    - (◠ 0h) + ◠ (0h + 0h)
+  ≡⟨ cong (λ $ → - (◠ 0h) + ◠ $) (+IdL _) ⟩
+    - (◠ 0h) + ◠ 0h
+  ≡⟨ +InvL _ ⟩
+    0h
+  ∎
+
+◠Inv : {{_ : Hemisphere H}} → (x : H) → ◠ (- x) ≡ - (◠ x)
+◠Inv x =
+    ◠ (- x)
+  ≡⟨ sym (+IdL _) ⟩
+    0h + ◠ (- x)
+  ≡⟨ cong (_+ ◠ (- x)) (sym (+InvL _)) ⟩
+    - (◠ x) + ◠ x + ◠ (- x)
+  ≡⟨ +Assoc _ _ _ ⟩
+    - (◠ x) + (◠ x + ◠ (- x))
+  ≡⟨ cong (- (◠ x) +_) (sym (◠+Hom _ _)) ⟩
+    - (◠ x) + ◠ (x + (- x))
+  ≡⟨ cong (λ $ → - (◠ x) + ◠ $) (+InvR _) ⟩
+    - (◠ x) + ◠ 0h
+  ≡⟨ cong (- (◠ x) +_) ◠Id ⟩
+    - (◠ x) + 0h
+  ≡⟨ +IdR _ ⟩
+    - (◠ x)
+  ∎
 
 ·IdL : {{_ : Hemisphere H}} → (x : H) → 0h · x ≡ 0h
 ·IdL x =
