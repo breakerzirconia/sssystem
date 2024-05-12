@@ -46,7 +46,7 @@ record HemisphereStr (H : Type ℓ) : Type ℓ where
 
     isHemisphere : IsHemisphere 0h _+_ -_ □_ ◠_
 
-  infixr 6 _+_
+  infixr 7 _+_
   infix  8 -_
   infix  8 □_
   infix  8 ◠_
@@ -67,5 +67,5 @@ HemisphereStr→AbGroupStr Hs .-_ = Hs .-_
 HemisphereStr→AbGroupStr Hs .isAbGroup = Hs .isHemisphere .isAbGroup
 
 Hemisphere→AbGroup : Hemisphere ℓ → AbGroup ℓ
-fst (Hemisphere→AbGroup A) = fst A
-snd (Hemisphere→AbGroup A) = HemisphereStr→AbGroupStr (snd A)
+fst (Hemisphere→AbGroup Hs) = fst Hs
+snd (Hemisphere→AbGroup Hs) = HemisphereStr→AbGroupStr (snd Hs)

@@ -12,7 +12,7 @@ private
     ℓ : Level
 
 -----------------------------------------------------------------------
--- Properties of Sssystem
+-- Properties of hemispheres
 
 module HemisphereTheory (H : Hemisphere ℓ) where
   open AbGroupTheory (Hemisphere→AbGroup H)
@@ -54,6 +54,15 @@ module HemisphereTheory (H : Hemisphere ℓ) where
       - (◠ x)
     ∎
 
+  ◠Two : (x : ⟨ H ⟩) → ◠ (x + x) ≡ x
+  ◠Two x =
+      ◠ (x + x)
+    ≡⟨ ◠+Hom _ _ ⟩
+      ◠ x + ◠ x
+    ≡⟨ ◠Twice _ ⟩
+      x
+    ∎
+
   ·IdL : (x : ⟨ H ⟩) → 0h · x ≡ 0h
   ·IdL x =
       0h · x
@@ -65,7 +74,7 @@ module HemisphereTheory (H : Hemisphere ℓ) where
       ◠ (□ x - 0h - □ x)
     ≡⟨ cong (λ $ → ◠ ($ - □ x)) (+-IdR (□ x)) ⟩
       ◠ (□ x - □ x)
-    ≡⟨ cong (◠_) (+-InvR (□ x)) ⟩
+    ≡⟨ cong (◠_) (+-Self (□ x)) ⟩
       ◠ 0h
     ≡⟨ ◠Id ⟩
       0h
@@ -86,11 +95,3 @@ module HemisphereTheory (H : Hemisphere ℓ) where
       0h
     ∎
 
--- ·OneR : {{_ : Hemisphere H}} → (x : H) → x · 1h ≡ x
--- ·OneR x =
---     x · 1h
---   ≡⟨⟩
---     ◠ (□ (x + 1h) - □ x - □ 1h)
---   ≡⟨ {!!} ⟩
---     x
---   ∎

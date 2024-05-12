@@ -33,8 +33,8 @@ module AbGroupTheory (A : AbGroup ℓ) where
       x
     ∎
 
-  +-InvR : (x : ⟨ A ⟩) → x - x ≡ 0g
-  +-InvR x =
+  +-Self : (x : ⟨ A ⟩) → x - x ≡ 0g
+  +-Self x =
       x - x
     ≡⟨⟩
       x + (- x)
