@@ -27,6 +27,10 @@ We can then define multiplication as follows: $`x \cdot y \; \coloneqq \; \frown
 
 A *unital hemisphere* is a hemisphere $(H, 0, +, -, \square, \frown)$ with an additional nullary constant $1$ that is different from $0$, called **one** or **unity**, such that
 1. $\square 1 = 1$.
-2. $`\forall x \in H \, . \square (x + 1) = \square x + x + x + 1`$.
+2. $`\forall n \in \mathbb{N}, x \in H \, . \square (x + \frown^n 1) = \square x + \frown^n (x + x) + \frown^{2n} 1`$.
+
+Where $`\mathbb{N} \coloneqq \{0, 1, 2, \dots\}`$ is the set of natural numbers, and $f^n (x)$ means "apply the function $f$ to the argument $x$ $n$ times".
 
 A special constant $\frown 1$ is pronounced **one half**.
+
+All the other constants formed by repeatedly applying $(\frown)$ to one half, i.e. $\frown \frown 1$, $\frown \frown \frown 1$, are pronounced **one quarter**, **one eighth**, and the list goes on.

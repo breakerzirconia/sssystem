@@ -1,11 +1,15 @@
 module Hemisphere.Properties where
 
+open import Cubical.Data.Nat
+  using (ℕ; zero; suc; ·-suc)
+  renaming (_·_ to _*_; _+_ to _⊹_)
 open import Cubical.Foundations.Prelude
 open import Cubical.Foundations.Structure
 open import Cubical.Algebra.AbGroup.Base
 
-open import Hemisphere.Base
 open import Cubical.Algebra.AbGroup.Properties.Extra
+open import Cubical.Foundations.Function.Extra
+open import Hemisphere.Base
 
 private
   variable
@@ -54,13 +58,46 @@ module HemisphereTheory (H : Hemisphere ℓ) where
       - (◠ x)
     ∎
 
-  ◠Two : (x : ⟨ H ⟩) → ◠ (x + x) ≡ x
-  ◠Two x =
+  ◠TwoTimes : (x : ⟨ H ⟩) → ◠ (x + x) ≡ x
+  ◠TwoTimes x =
       ◠ (x + x)
     ≡⟨ ◠+Hom _ _ ⟩
       ◠ x + ◠ x
     ≡⟨ ◠Twice _ ⟩
       x
+    ∎
+
+  ◠ⁿ⁺¹TwoTimes : (n : ℕ) → (x : ⟨ H ⟩) → (◠_ ∘ⁿ suc n) (x + x) ≡ (◠_ ∘ⁿ n) x
+  ◠ⁿ⁺¹TwoTimes zero x = ◠TwoTimes x
+  ◠ⁿ⁺¹TwoTimes (suc n) x = cong ◠_ (◠ⁿ⁺¹TwoTimes n x)
+
+  □◠ⁿSwap : (n : ℕ) → (x : ⟨ H ⟩) → □ (◠_ ∘ⁿ n) x ≡ (◠_ ∘ⁿ 2 * n) (□ x)
+  □◠ⁿSwap zero x = refl
+  □◠ⁿSwap (suc n) x =
+      □ (◠_ ∘ⁿ suc n) x
+    ≡⟨⟩
+      □ (◠ (◠_ ∘ⁿ n) x)
+    ≡⟨ □◠Swap _ ⟩
+      ◠ (◠ (□ (◠_ ∘ⁿ n) x))
+    ≡⟨ cong (λ $ → ◠ (◠ $)) (□◠ⁿSwap n x) ⟩
+      ◠ (◠ (◠_ ∘ⁿ 2 * n) (□ x))
+    ≡⟨⟩
+      (◠_ ∘ⁿ 2 ⊹ 2 * n) (□ x)
+    ≡⟨ cong (λ $ → (◠_ ∘ⁿ $) (□ x)) (sym (·-suc 2 n)) ⟩
+      (◠_ ∘ⁿ 2 * suc n) (□ x)
+    ∎
+
+  ·Comm : (x y : ⟨ H ⟩) → x · y ≡ y · x
+  ·Comm x y =
+      x · y
+    ≡⟨⟩
+      ◠ (□ (x + y) - □ x - □ y)
+    ≡⟨ cong (λ $ → ◠ (□ $ - □ x - □ y)) (+Comm x y) ⟩
+      ◠ (□ (y + x) - □ x - □ y)
+    ≡⟨ cong ◠_ (+-Swap _ _ _) ⟩
+      ◠ (□ (y + x) - □ y - □ x)
+    ≡⟨⟩
+      y · x
     ∎
 
   ·IdL : (x : ⟨ H ⟩) → 0h · x ≡ 0h
@@ -83,13 +120,7 @@ module HemisphereTheory (H : Hemisphere ℓ) where
   ·IdR : (x : ⟨ H ⟩) → x · 0h ≡ 0h
   ·IdR x =
       x · 0h
-    ≡⟨⟩
-      ◠ (□ (x + 0h) - □ x - □ 0h)
-    ≡⟨ cong (λ $ → ◠ (□ $ - □ x - □ 0h)) (+Comm _ _) ⟩
-      ◠ (□ (0h + x) - □ x - □ 0h)
-    ≡⟨ cong (◠_) (+-Swap _ _ _) ⟩
-      ◠ (□ (0h + x) - □ 0h - □ x)
-    ≡⟨⟩
+    ≡⟨ ·Comm _ _ ⟩
       0h · x
     ≡⟨ ·IdL _ ⟩
       0h
