@@ -125,4 +125,3 @@ module HemisphereTheory (H : Hemisphere ℓ) where
     ≡⟨ ·IdL _ ⟩
       0h
     ∎
-
